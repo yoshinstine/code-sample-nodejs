@@ -1,7 +1,10 @@
 # NWEA's Platform Team code sample test
 
-This test attempts to simulate, in a very basic manner, the development work required to implement a lambda that uses 
+This test attempts to simulate, in a very basic manner, the development work required to implement lambdas that use 
 the DynamoDB database to save and read data.  
+
+The code sample test uses *DynamoDB local* to run a local instance of the DynamoDB database:
+https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/DynamoDBLocal.html 
 
 ## Prerequisites
 - node version 10.x installed

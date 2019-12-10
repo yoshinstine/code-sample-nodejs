@@ -1,6 +1,5 @@
 const AWS = require('aws-sdk');
 
-// TODO (extra credit) instrument the DynamoDB client with AWS X-ray
 const dynamodb = new AWS.DynamoDB.DocumentClient({
   apiVersion: '2012-08-10',
   endpoint: new AWS.Endpoint('http://localhost:8000'),

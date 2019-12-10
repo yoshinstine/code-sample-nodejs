@@ -63,6 +63,30 @@ describe('the code sample', function () {
     assert.deepEqual(queryResult[0], schoolStudent, 'Expected the query result to match what we saved');
   });
 
+  // TODO uncomment this test if you implement retrieval of multiple pages of data
+  it.skip('returns all pages of data', async function () {
+    let createdRecords = 0;
+    const schoolId = uuid();
+    while (createdRecords++ < 10) {
+      await writeData({
+        schoolId: schoolId,
+        schoolName: 'NWEA Test School ' + createdRecords,
+        studentId: uuid(),
+        studentFirstName: 'Dan',
+        studentLastName: 'Danny the ' + createdRecords,
+        studentGrade: '3',
+      });
+    }
+
+    const query = {
+      schoolId: schoolId,
+    };
+    const queryResult = await readData.handler(query);
+    assert.isTrue(Array.isArray(queryResult), 'Expected queryResult to be of type Array');
+    assert.equal(queryResult.length, 10, 'Expected to find ten results');
+  });
+
+
   // This section starts the local DynamoDB database
   before(async function () {
     await localDynamoDbUtils.startLocalDynamoDB();
