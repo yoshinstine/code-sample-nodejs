@@ -7,9 +7,8 @@ const localDynamoDbUtils = require('./dynamodb-local/dynamodb-local-util');
 const readData = require('./../src/read-data');
 const writeData = require('./../src/write-data');
 
-
-
 describe('the code sample', function () {
+  this.timeout(10000);
 
   // This is the test that you want to pass
   it('saves data to DynamoDB and then it can be read', async function () {
@@ -48,7 +47,7 @@ describe('the code sample', function () {
       schoolName: 'NWEA Test School',
       studentId: studentId,
       studentFirstName: 'John',
-      studentLastName: 'Doe',
+      studentLastName: 'Robertson',
       studentGrade: '5',
     };
 
