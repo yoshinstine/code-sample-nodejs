@@ -5,7 +5,7 @@ const dynamodb = new AWS.DynamoDB.DocumentClient({
   apiVersion: '2012-08-10',
   endpoint: new AWS.Endpoint('http://localhost:8000'),
   region: 'us-west-2',
-  // what else would you do to improve performance?
+  // what could you do to improve performance?
 });
 
 const tableName = 'SchoolStudents';
