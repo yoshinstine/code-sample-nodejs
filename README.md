@@ -12,7 +12,7 @@ the DynamoDB database to save and read data.
 - Implement the *TODOs* in the ````src/write-data.js```` and ````src/read-data.js```` files, if you have time try to 
     implement the *extra credit TODOs* 
 - Test your implementation using the ````npm test```` command and ensure all of the tests pass 
-    - If you've attempted the "query using GSI" extra credit TODO you will need to enable the skipped test
+    - If you've attempted the *"query using GSI" extra credit TODO* you will need to enable the skipped test
     
 # Helpful references
 - https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html
