@@ -68,7 +68,7 @@ describe('the code sample', function () {
     let createdRecords = 0;
     const schoolId = uuid();
     while (createdRecords++ < 10) {
-      await writeData({
+      await writeData.handler({
         schoolId: schoolId,
         schoolName: 'NWEA Test School ' + createdRecords,
         studentId: uuid(),
