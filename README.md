@@ -16,6 +16,7 @@ https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/DynamoDBLocal.h
     implement the *extra credit TODOs* 
 - Test your implementation using the ````npm test```` command and ensure all of the tests pass 
     - If you've attempted the *"query using GSI" extra credit TODO* you will need to enable the skipped test
+- Add any additional tests you want! 
     
 # Helpful references
 - https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html
