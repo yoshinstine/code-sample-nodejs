@@ -1,5 +1,7 @@
 const AWS = require('aws-sdk');
-
+const Ajv = require('ajv');
+const studentSchema = require('./studentSchema.json');
+const ajv = new Ajv(); // options can be passed, e.g. {allErrors: true}
 const dynamodb = new AWS.DynamoDB.DocumentClient({
   apiVersion: '2012-08-10',
   endpoint: new AWS.Endpoint('http://localhost:8000'),
@@ -20,8 +22,29 @@ const tableName = 'SchoolStudents';
  * @param {string} event.studentLastName
  * @param {string} event.studentGrade
  */
-exports.handler = event => {
-  // TODO validate that all expected attributes are present (assume they are all required)
-  // TODO use the AWS.DynamoDB.DocumentClient to save the 'SchoolStudent' record
-  // The 'SchoolStudents' table key is composed of schoolId (partition key) and studentId (range key).
+exports.handler = async event => {
+  try {
+    const student = {
+      schoolId: event.schoolId,
+      schoolName: event.schoolName,
+      studentId: event.studentId,
+      studentFirstName: event.studentFirstName,
+      studentLastName: event.studentLastName,
+      studentGrade: event.studentGrade,
+    };
+    const valid = ajv.compile(studentSchema);
+    if (valid(student)) {
+      await dynamodb
+        .put({
+          TableName: tableName,
+          Item: student,
+        })
+        .promise();
+      console.log('Success saving student');
+    } else {
+      console.log(valid.errors);
+    }
+  } catch (error) {
+    console.log('An unexpected error occurred: ', error);
+  }
 };

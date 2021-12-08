@@ -5,6 +5,11 @@ const dynamodb = new AWS.DynamoDB.DocumentClient({
   endpoint: new AWS.Endpoint('http://localhost:8000'),
   region: 'us-west-2',
   // what could you do to improve performance?
+  // Something like below might help
+  maxRetries: 10,
+  httpOptions: {
+    timeout: 5000,
+  },
 });
 
 const tableName = 'SchoolStudents';
@@ -18,10 +23,31 @@ const studentLastNameGsiName = 'studentLastNameGsi';
  * @param {string} event.studentId
  * @param {string} [event.studentLastName]
  */
-exports.handler = event => {
-  // TODO use the AWS.DynamoDB.DocumentClient to write a query against the 'SchoolStudents' table and return the results.
-  // The 'SchoolStudents' table key is composed of schoolId (partition key) and studentId (range key).
-  // TODO (extra credit) if event.studentLastName exists then query using the 'studentLastNameGsi' GSI and return the results.
-  // TODO (extra credit) limit the amount of records returned in the query to 5 and then implement the logic to return all
-  //  pages of records found by the query (uncomment the test which exercises this functionality)
+exports.handler = async event => {
+  try {
+    const key = event.studentLastName ? 'studentLastName' : 'schoolId';
+    const params = {
+      TableName: tableName,
+      ...(key === 'studentLastName' && { IndexName: studentLastNameGsiName }),
+      KeyConditionExpression: `#${key} = :v_${key}`,
+      ExpressionAttributeNames: {
+        [`#${key}`]: key,
+      },
+      ExpressionAttributeValues: {
+        [`:v_${key}`]: key === 'studentLastName' ? event.studentLastName : event.schoolId,
+      },
+      Limit: 5,
+    };
+    const allItems = [];
+    let res = null;
+    do {
+      res = await dynamodb.query(params).promise();
+      params.ExclusiveStartKey = res.LastEvaluatedKey;
+      allItems.push(...res.Items);
+    } while (res.LastEvaluatedKey);
+
+    return allItems;
+  } catch (error) {
+    console.log(error);
+  }
 };

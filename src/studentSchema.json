@@ -1,0 +1,33 @@
+{
+  "$id": "studentSchema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "schoolId": {
+      "type": "string"
+    },
+    "schoolName": {
+      "type": "string"
+    },
+    "studentId": {
+      "type": "string"
+    },
+    "studentFirstName": {
+      "type": "string"
+    },
+    "studentLastName": {
+      "type": "string"
+    },
+    "studentGrade": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "schoolId",
+    "schoolName",
+    "studentId",
+    "studentFirstName",
+    "studentLastName",
+    "studentGrade"
+  ]
+}
