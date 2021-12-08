@@ -86,29 +86,31 @@ describe('the code sample', function () {
     assert.equal(queryResult.length, 10, 'Expected to find ten results');
   });
 
-
   // This section starts the local DynamoDB database
   before(async function () {
     await localDynamoDbUtils.startLocalDynamoDB();
 
     // create the 'SchoolStudents' DynamoDB table in the locally running database
-    const partitionKey = 'schoolId', rangeKey = 'studentId',
-      gsiPartitionKey = 'studentLastName', gsiRangeKey = 'studentFirstName';
+    const partitionKey = 'schoolId',
+      rangeKey = 'studentId',
+      gsiPartitionKey = 'studentLastName',
+      gsiRangeKey = 'studentFirstName';
 
     const keySchema = [
-      { AttributeName: partitionKey, KeyType: "HASH" },
-      { AttributeName: rangeKey, KeyType: "RANGE" },
+      { AttributeName: partitionKey, KeyType: 'HASH' },
+      { AttributeName: rangeKey, KeyType: 'RANGE' },
     ];
     const attributeDefinitions = [
-      { AttributeName: partitionKey, AttributeType: "S"},
-      { AttributeName: rangeKey, AttributeType: "S" },
-      { AttributeName: gsiPartitionKey, AttributeType: "S" },
-      { AttributeName: gsiRangeKey, AttributeType: "S" },
+      { AttributeName: partitionKey, AttributeType: 'S' },
+      { AttributeName: rangeKey, AttributeType: 'S' },
+      { AttributeName: gsiPartitionKey, AttributeType: 'S' },
+      { AttributeName: gsiRangeKey, AttributeType: 'S' },
     ];
     const gsis = [
       localDynamoDbUtils.buildGlobalSecondaryIndex('studentLastNameGsi', [
-        {AttributeName: gsiPartitionKey, KeyType: "HASH"},
-        {AttributeName: gsiRangeKey, KeyType: "RANGE"}]),
+        { AttributeName: gsiPartitionKey, KeyType: 'HASH' },
+        { AttributeName: gsiRangeKey, KeyType: 'RANGE' },
+      ]),
     ];
 
     await localDynamoDbUtils.createTable('SchoolStudents', keySchema, attributeDefinitions, gsis);
@@ -117,5 +119,4 @@ describe('the code sample', function () {
   after(function () {
     localDynamoDbUtils.stopLocalDynamoDB();
   });
-
 });

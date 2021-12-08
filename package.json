@@ -15,6 +15,7 @@
   "author": "NWEA",
   "license": "UNLICENSED",
   "dependencies": {
+    "ajv": "^8.8.2",
     "aws-sdk": "2.586.0",
     "aws-xray-sdk": "2.5.0"
   },
